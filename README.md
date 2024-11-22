@@ -1,4 +1,4 @@
-# 32Bit_ALU Simulation
+DAMAVISHNUVARDHAN/32Bit_ALU# 32Bit_ALU Simulation
 
 # Aim: 
 
@@ -33,9 +33,27 @@ A Blank Document opens up into which the following source code can be typed down
 ## a)To Verify the Functionality using Test Bench
 
 ## Source Code – Using Case Statement :
-
-(Include program here)
-
+```
+module alu_32bit_case(y,a,b,f);
+input [31:0]a;
+input [31:0]b;
+input [2:0]f;
+output reg [31:0]y;
+always@(*)
+begin
+case(f)
+3'b000:y=a&b; //AND Operation
+3'b001:y=a|b; //OR Operation
+3'b010:y=~(a&b); //NAND Operation
+3'b011:y=~(a|b); //NOR Operation
+3'b100:y=a+b; //Addition
+3'b101:y=a-b; //Subtraction
+3'b110:y=a*b; //Multiply
+default:y=32'bx;
+endcase
+end
+endmodule
+```
 Use Save option or Ctrl+S to save the code or click on the save option from the top most right corner and close the text file.
 
 ## Creating Test bench:
@@ -43,9 +61,28 @@ Use Save option or Ctrl+S to save the code or click on the save option from the 
 Similarly, create your test bench using gedit <filename_tb>.v or <filename_tb>.vhdl to open a new blank document (alu_32bit_tb_case).
 
 ## Test Bench :
-
-(Include test bench program here)
-
+```
+module alu_32bit_tb_case;
+reg [31:0]a;
+reg [31:0]b;
+reg [2:0]f;
+wire [31:0]y;
+alu_32bit_case test2(.y(y),.a(a),.b(b),.f(f));
+initial
+begin
+a=32'h00000000;
+b=32'hFFFFFFFF;
+#10 f=3'b000;
+#10 f=3'b001;
+#10 f=3'b010;
+#10 f=3'b011;
+#10 f=3'b100;
+#10 f=3'b101;
+#10 f=3'b110;
+#10;$stop;
+end
+endmodule
+```
 Use Save option or Ctrl+S to save the code or click on the save option from the top most right corner and close the text file.
 
 ## Functional Simulation: 
@@ -59,7 +96,8 @@ source /cadence/install/cshrc (mention the path of the tools)
 (The path of cshrc could vary depending on the installation destination)
       
 After this you can see the window like below 
-![WhatsApp Image 2024-11-13 at 20 14 29_eaf2b1c6](https://github.com/user-attachments/assets/1b7cd627-7ba1-4a80-ba42-bd4123032ffc)
+![Screenshot 2024-10-21 113655](https://github.com/user-attachments/assets/5fdc1535-4d84-4c85-be3f-77863106b190)
+
 
 ### Fig 2: Invoke the Cadence Environment
 
@@ -73,14 +111,15 @@ or
 
 
 It will invoke the nclaunch window for functional simulation we can compile,elaborate and simulate it using Multiple Step .
-![WhatsApp Image 2024-11-13 at 20 14 30_a488d7f6](https://github.com/user-attachments/assets/d247cd82-4acb-4fdf-bad0-d4b0161a96e8)
+
+![Screenshot 2024-10-21 113721](https://github.com/user-attachments/assets/5732f66f-63a3-433d-9cf8-87c016342171)
+
 
 ### Fig 3: Setting Multi-step simulation
 
 Select Multiple Step and then select “Create cds.lib File” as shown in below figure 
 
 Click the cds.lib file and save the file by clicking on Save option 
-![WhatsApp Image 2024-11-13 at 20 14 31_782eef9a](https://github.com/user-attachments/assets/0288bf8a-3be1-47ae-8588-a04d92ca1384)
 
 ### Fig 4:cds.lib file Creation
 
@@ -88,7 +127,7 @@ Save cds.lib file and select the correct option for cds.lib file format based on
 
 Select “Don’t include any libraries (verilog design)” from “New cds.lib file” and click on “OK” as in below figure .
 
-We are simulating verilog design without using any libraries  
+We are simulating verilog design without using any libraries 
 
 A Click “OK” in the “nclaunch: Open Design Directory” window as shown in below figure 
 
@@ -103,7 +142,9 @@ Left side you can see the HDL files. Right side of the window has worklib and sn
 Worklib is the directory where all the compiled codes are stored while Snapshot will have output of elaboration which in turn goes for simulation .
 
 To perform the function simulation, the following three steps are involved Compilation, Elaboration and Simulation. 
-![WhatsApp Image 2024-11-13 at 20 14 30_7eb3fec8](https://github.com/user-attachments/assets/b8529ab5-5d45-4e24-992d-71bc031aca83)
+
+![Screenshot (26)](https://github.com/user-attachments/assets/ba8d6c1c-ce87-4e5e-aa27-eae74ea9d39b)
+
 
 ### Fig 6: Nclaunch Window
 
@@ -128,9 +169,9 @@ i.e Cadence IES command for compile: ncverilog +access+rwc -compile fa.v
 Left side select the file and in Tools : launch verilog compiler with current selection will get enable. Click it to compile the code 
 
 Worklib is the directory where all the compiled codes are stored while Snapshot will have output of elaboration which in turn goes for simulation 
-![WhatsApp Image 2024-11-13 at 20 14 30_7eb3fec8](https://github.com/user-attachments/assets/ba49d8f4-5a1d-47f4-8551-b89818d8e814)
 
 ### Fig 7: Compiled database in worklib
+![image](https://github.com/user-attachments/assets/2c4d52d7-215e-44be-a94c-1dbdb9354582)
 
 After compilation it will come under worklib you can see in right side window
 
@@ -163,7 +204,6 @@ Outputs: Elaborate database updated in mapped library if successful, generates r
 5.It also establishes net connectivity and prepares all of this for simulation
 
 After elaboration the file will come under snapshot. Select the test bench and simulate it.
-![WhatsApp Image 2024-11-13 at 20 14 29_264c337d](https://github.com/user-attachments/assets/02d1e770-c37b-4b50-92b1-779ec8d42ddf)
 
 ## Fig 8: Elaboration Launch Option
 
@@ -178,37 +218,10 @@ Outputs: Simulation log file, waveforms for debugging
 Simulation allow to dump design and test bench signals into a waveform 
 
 Steps for simulation – Run the simulation command with simulator options
-![WhatsApp Image 2024-11-14 at 21 30 54_453ea8d8](https://github.com/user-attachments/assets/a1ab4fa9-a7f4-44f7-820c-8ae4988454e6)
-
+![image](https://github.com/user-attachments/assets/4ce24ad4-b05f-41ac-a7dc-b177198f1e30)
 
 ## Fig 9: Design Browser window for simulation
-![WhatsApp Image 2024-11-14 at 21 30 53_be9dbec6](https://github.com/user-attachments/assets/3d471bfc-d600-4d25-9c6e-93a1f348c23c)
-
+![image](https://github.com/user-attachments/assets/108e168c-e99a-4076-827f-a51e87dc4dd0)
 
 ## Fig 10:Simulation Waveform Window
-![WhatsApp Image 2024-11-14 at 21 30 54_4292bc2a](https://github.com/user-attachments/assets/eb8353b0-8da6-4dc9-b464-01c5bcdbe284)
-
-
-## Fig 11:Simulation Waveform Window
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-      
-
-
-
-
-
-
-
+![image](https://github.com/user-attachments/assets/38a1d527-0d8d-4ea0-b957-c96b452d99a5)
