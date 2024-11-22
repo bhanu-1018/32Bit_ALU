@@ -1,5 +1,3 @@
-DAMAVISHNUVARDHAN/32Bit_ALU# 32Bit_ALU Simulation
-
 # Aim: 
 
 Write a verilog code for 32 bit ALU supporting four logical and four arithmetic operations,use case statement and if statement for ALU behavioral modeling.
@@ -33,7 +31,7 @@ A Blank Document opens up into which the following source code can be typed down
 ## a)To Verify the Functionality using Test Bench
 
 ## Source Code – Using Case Statement :
-```
+
 module alu_32bit_case(y,a,b,f);
 input [31:0]a;
 input [31:0]b;
@@ -53,7 +51,7 @@ default:y=32'bx;
 endcase
 end
 endmodule
-```
+
 Use Save option or Ctrl+S to save the code or click on the save option from the top most right corner and close the text file.
 
 ## Creating Test bench:
@@ -61,7 +59,7 @@ Use Save option or Ctrl+S to save the code or click on the save option from the 
 Similarly, create your test bench using gedit <filename_tb>.v or <filename_tb>.vhdl to open a new blank document (alu_32bit_tb_case).
 
 ## Test Bench :
-```
+
 module alu_32bit_tb_case;
 reg [31:0]a;
 reg [31:0]b;
@@ -82,7 +80,7 @@ b=32'hFFFFFFFF;
 #10;$stop;
 end
 endmodule
-```
+
 Use Save option or Ctrl+S to save the code or click on the save option from the top most right corner and close the text file.
 
 ## Functional Simulation: 
